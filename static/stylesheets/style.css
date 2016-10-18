@@ -1,0 +1,27 @@
+<!-- TODO: Remove all traces of Kid Tracker source code -->
+
+
+/* Add CSS rules here. */
+
+/*
+body {
+  padding: 20px 50px;
+}
+*/
+
+body {
+	padding-top: 70px;
+	padding-left: 20px;
+}
+
+#login-a {
+	padding-left: 20px;
+}
+
+th {
+	font-size: 1.5em;
+}
+
+td.edit-actions {
+	width: 70px;
+}

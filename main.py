@@ -1,7 +1,14 @@
+#<!-- TODO: Remove all traces of Kid Tracker source code -->
+
+
 import os
 
+from google.appengine.api import users
 import jinja2
 import webapp2
+
+from handlers.base_handlers import BasePage
+
 
 # Jinja environment instance necessary to use Jinja templates.
 def __init_jinja_env():
@@ -16,16 +23,25 @@ def __init_jinja_env():
 jinja_env = __init_jinja_env()
 
 
-class MainHandler(webapp2.RequestHandler):
+class LoginPage(webapp2.RequestHandler):
     def get(self):
-        # A basic template could just send text out the response stream, but we use Jinja
-        # self.response.write("Hello world!")
+        user = users.get_current_user()
+        if user:
+            self.redirect('/lists')
+            return
         
-        template = jinja_env.get_template("templates/base_page.html")
-        values = {"title": "Hello, world!"}
-        self.response.out.write(template.render(values))
-    
+        template = jinja_env.get_template("templates/login.html")
+        values = {"login_url": users.create_login_url('/lists')}
+        self.response.write(template.render(values))
+        
+class ListsPage(BasePage):
+#     def update_values(self, email, values):
+#         values['kids_query'] = utils.get_query_for_all_kids_for_email(email)
+        
+    def get_template(self):
+        return "templates/lists.html"
 
 app = webapp2.WSGIApplication([
-    ('/', MainHandler)
+    ('/', LoginPage),
+    ('/lists', ListsPage)
 ], debug=True)
