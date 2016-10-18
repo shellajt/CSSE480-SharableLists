@@ -1,43 +1,34 @@
 from google.appengine.ext import ndb
-from google.appengine.ext.ndb import msgprop
-from protorpc.messages import Enum
 
-
-# TODO: Implement
-
-
-
-
-# Potentially helpful (or not) NDB Snippets - For reference only (delete or comment out)
-class AccountInfo(ndb.Model):
+class User(ndb.Model):
     """ Information about this user.  There is only 1 of these per user. """
-
-    # Example property for this example model object.
-    name = ndb.StringProperty(default="")
-
-
-class MyObjectClassName(ndb.Model):
-    """ Another example model object. """
+    email = ndb.StringProperty()
+    display_name = ndb.StringProperty()
+    """ This property likely to change as we figure out what we need """
+    preferences = ndb.StringProperty(repeated=True)
     
-    # Examples of some different property types.
-    someProperty = ndb.StringProperty(default="")
-    non_indexed_string = ndb.TextProperty()
-    datetime = ndb.DateTimeProperty(auto_now_add=True, auto_now=False)
-    boolean = ndb.BooleanProperty(default=False)
-    someNumericfieldName = ndb.IntegerProperty()
-    float = ndb.FloatProperty()
-    repeatedField = ndb.StringProperty(repeated=True)
+class Folder(ndb.Model):
+    """ Information about a user's folder structure """
+    name = ndb.StringProperty()
     
-    class ExampleEnum(Enum):
-        """ Properties that can only have a few values."""
-        OPTION_1 = 1
-        OPTION_2 = 2
-        OPTION_3 = 3
-    recipient_type = msgprop.EnumProperty(ExampleEnum, default=ExampleEnum.OPTION_1)
+class List(ndb.model):
+    """ Information about an individual list """
+    name = ndb.StringProperty()
+    folder_key = ndb.KeyProperty(kind=Folder)
+    shared_keys = ndb.KeyProperty(kind=User, repeated=True)
+
+class Task(ndb.model):
+    """ Information about a task within a list """
+    name = ndb.StringProperty()
+    due_date_time = ndb.DateTimeProperty()
+    note = ndb.StringProperty()
+    is_complete = ndb.BooleanProperty(default=False)
+    last_touch_date_time = ndb.DateTimeProperty(auto_now=True)
     
-class MyOtherClassName(ndb.Model):
-    """ Yet another example model object. """
-  
-    single_key = ndb.KeyProperty(kind=MyObjectClassName)
-    list_of_keys = ndb.KeyProperty(kind=MyObjectClassName, repeated=True)
+class Comment(ndb.model):
+    """ Information about a commoent on a task """
+    creater_key = ndb.KeyProperty(kind=User)
+    text = ndb.StringProperty()
+    last_touch_date_time = ndb.DateTimeProperty(auto_now=True)
+
     
