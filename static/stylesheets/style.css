@@ -1,4 +1,3 @@
-/* Add CSS rules here. */
 
 /*
 body {
@@ -21,4 +20,8 @@ th {
 
 td.edit-actions {
 	width: 70px;
+}
+
+#login {
+	text-align: center;
 }
