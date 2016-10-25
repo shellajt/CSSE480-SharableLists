@@ -11,13 +11,13 @@ class Folder(ndb.Model):
     """ Information about a user's folder structure """
     name = ndb.StringProperty()
     
-class List(ndb.model):
+class List(ndb.Model):
     """ Information about an individual list """
     name = ndb.StringProperty()
     folder_key = ndb.KeyProperty(kind=Folder)
     shared_keys = ndb.KeyProperty(kind=User, repeated=True)
 
-class Task(ndb.model):
+class Task(ndb.Model):
     """ Information about a task within a list """
     name = ndb.StringProperty()
     due_date_time = ndb.DateTimeProperty()
@@ -25,8 +25,8 @@ class Task(ndb.model):
     is_complete = ndb.BooleanProperty(default=False)
     last_touch_date_time = ndb.DateTimeProperty(auto_now=True)
     
-class Comment(ndb.model):
-    """ Information about a commoent on a task """
+class Comment(ndb.Model):
+    """ Information about a comment on a task """
     creater_key = ndb.KeyProperty(kind=User)
     text = ndb.StringProperty()
     last_touch_date_time = ndb.DateTimeProperty(auto_now=True)

@@ -4,10 +4,14 @@
 import os
 
 from google.appengine.api import users
+from google.appengine.ext import ndb
 import jinja2
 import webapp2
 
-from handlers.base_handlers import BasePage
+from handlers.base_handlers import BasePage, BaseAction
+from models import Task
+import utils
+from datetime import datetime
 
 
 # Jinja environment instance necessary to use Jinja templates.
@@ -29,19 +33,44 @@ class LoginPage(webapp2.RequestHandler):
         if user:
             self.redirect('/lists')
             return
-        
+
         template = jinja_env.get_template("templates/login.html")
         values = {"login_url": users.create_login_url('/lists')}
         self.response.write(template.render(values))
-        
+
 class ListsPage(BasePage):
-#     def update_values(self, email, values):
-#         values['kids_query'] = utils.get_query_for_all_kids_for_email(email)
-        
+    def update_values(self, email, values):
+        values['tasks_query'] = utils.get_query_for_all_tasks_for_email(email)
+
     def get_template(self):
         return "templates/lists.html"
 
+class InsertTaskAction(BaseAction):
+    def handle_post(self, email):
+        if self.request.get("entity_key"):
+            task_key = ndb.Key(urlsafe=self.request.get("entity_key"))
+            task = task_key.get()
+        else:
+            task = Task(parent=utils.get_parent_key_for_email(email))
+
+        task.name = self.request.get("name")
+        # TODO: Fix
+#         task.due_date_time = self.request.get("due_date_time")
+        task.due_date_time = datetime.now()
+        task.note = self.request.get("note")
+        task.is_complete = False
+        task.put()
+        self.redirect(self.request.referer)
+
+class DeleteTaskAction(BaseAction):
+    def handle_post(self, email):
+        task_key = ndb.Key(urlsafe=self.request.get("entity_key"))
+        task_key.delete()
+        self.redirect(self.request.referer)
+
 app = webapp2.WSGIApplication([
     ('/', LoginPage),
-    ('/lists', ListsPage)
+    ('/lists', ListsPage),
+    ('/inserttask', InsertTaskAction),
+    ('/deletetask', DeleteTaskAction)
 ], debug=True)
