@@ -1,5 +1,3 @@
-<!-- TODO: Remove all traces of Kid Tracker source code -->
-
 {% extends "templates/base_page.html" %} {% block links %}
 <ul class="nav navbar-nav">
 	<li><a id="add-task" href="#" data-toggle="modal" data-target="#insert-task-modal">Add Task</a></li>
@@ -22,7 +20,12 @@
 			<tbody>
 				{% for task in tasks_query %}
 				<tr>
-					<td>{{ task.is_complete }}</td>
+					<td>
+						<input type="checkbox" name="completed-checkbox" value="completed"
+						{% if task.is_complete %}
+							checked
+						{% endif %}>
+					</td>
 					<td>{{ task.name }}</td>
 					<td>{{ task.due_date_time }}</td>
 					<td>{{ task.note }}</td>
@@ -72,13 +75,19 @@
 					<div class="form-group">
 						<label for="due_date_time-input" class="col-sm-2 control-label">Due Date</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="due_date_time-input" name="due_date_time" placeholder="Due Date">
+							<input type="datetime-local" class="form-control" id="due_date_time-input" name="due_date_time" placeholder="Due Date">
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="note-input" class="col-sm-2 control-label">Notes</label>
+						<label for="note-input" class="col-sm-2 control-label">Note</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="note-input" name="note" placeholder="Notes">
+							<input type="text" class="form-control" id="note-input" name="note" placeholder="Note">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="is_complete-input" class="col-sm-2 control-label">Completed</label>
+						<div class="col-sm-10">
+							<input type="checkbox" class="form-control" id="checkbox-input" name="is_complete">
 						</div>
 					</div>
 				</div>

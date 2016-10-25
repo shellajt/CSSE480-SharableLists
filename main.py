@@ -1,6 +1,4 @@
-#<!-- TODO: Remove all traces of Kid Tracker source code -->
-
-
+import datetime
 import os
 
 from google.appengine.api import users
@@ -11,7 +9,6 @@ import webapp2
 from handlers.base_handlers import BasePage, BaseAction
 from models import Task
 import utils
-from datetime import datetime
 
 
 # Jinja environment instance necessary to use Jinja templates.
@@ -54,11 +51,13 @@ class InsertTaskAction(BaseAction):
             task = Task(parent=utils.get_parent_key_for_email(email))
 
         task.name = self.request.get("name")
-        # TODO: Fix
-#         task.due_date_time = self.request.get("due_date_time")
-        task.due_date_time = datetime.now()
+        task.due_date_time = datetime.datetime.strptime( self.request.get("due_date_time"), "%Y-%m-%dT%H:%M" )
         task.note = self.request.get("note")
-        task.is_complete = False
+        is_complete = self.request.get("is_complete")
+        if is_complete:
+            task.is_complete = True
+        else:
+            task.is_complete = False
         task.put()
         self.redirect(self.request.referer)
 
