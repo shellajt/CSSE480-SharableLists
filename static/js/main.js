@@ -1,6 +1,7 @@
 var shareableLists = shareableLists || {};
 
 shareableLists.editing = false;
+shareableLists.sideNavShown = false;
 
 shareableLists.attachEventHandlers = function() {
 	$("#insert-task-modal").on("shown.bs.modal", function() {
@@ -49,6 +50,28 @@ shareableLists.enableButtons = function() {
 
 		$("#delete-task-modal input[name=entity_key]").val(entityKey);
 	});
+}
+
+function toggleNav() {
+	if (!shareableLists.sideNavShown) {
+		openNav();
+		shareableLists.sideNavShown = true;
+	} else {
+		closeNav();
+		shareableLists.sideNavShown = false;
+	}
+}
+
+/* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
+function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+}
+
+/* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("main").style.marginLeft = "0";
 }
 
 $(document).ready(function() {
