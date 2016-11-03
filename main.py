@@ -7,7 +7,7 @@ import jinja2
 import webapp2
 
 from handlers.base_handlers import BasePage, BaseAction
-from models import Task
+from models import Task, List
 import utils
 
 
