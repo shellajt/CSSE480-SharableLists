@@ -67,9 +67,31 @@ class DeleteTaskAction(BaseAction):
         task_key.delete()
         self.redirect(self.request.referer)
 
+class InsertListAction(BaseAction):
+    def handle_post(self, email):
+        if self.request.get("entity_key"):
+            list_key = ndb.Key(urlsafe=self.request.get("entity_key"))
+            list = list_key.get()
+        else:
+            list = List(parent=utils.get_parent_key_for_email(email))
+
+        list.name = self.request.get("name")
+        # TODO: Add fields for shared lists
+
+        list.put()
+        self.redirect(self.request.referer)
+
+class DeleteListAction(BaseAction):
+    def handle_post(self, email):
+        task_key = ndb.Key(urlsafe=self.request.get("entity_key"))
+        task_key.delete()
+        self.redirect(self.request.referer)
+
 app = webapp2.WSGIApplication([
     ('/', LoginPage),
     ('/lists', ListsPage),
     ('/inserttask', InsertTaskAction),
-    ('/deletetask', DeleteTaskAction)
+    ('/deletetask', DeleteTaskAction),
+    ('/insertlist', InsertListAction),
+    ('/deletelist', DeleteListAction)
 ], debug=True)

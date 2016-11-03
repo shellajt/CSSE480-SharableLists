@@ -10,6 +10,7 @@ shareableLists.attachEventHandlers = function() {
 }
 
 shareableLists.enableButtons = function() {
+	// Task buttons
 	$("#add-task").click(function() {
 		$("#insert-task-modal .modal-title").html("Add a task");
 		$("#insert-task-modal button[type=submit]").html("Add task");
@@ -49,6 +50,32 @@ shareableLists.enableButtons = function() {
 		entityKey = $(this).find(".entity-key").html();
 
 		$("#delete-task-modal input[name=entity_key]").val(entityKey);
+	});
+
+	// List buttons
+	$("#add-list").click(function() {
+		$("#insert-list-modal .modal-title").html("Add a list");
+		$("#insert-list-modal button[type=submit]").html("Add list");
+
+		$("#insert-list-modal input[name=name]").val("");
+		$("#insert-list-modal input[name=entity_key]").val("").prop("disabled", true);
+	});
+
+	$(".edit-list").click(function() {
+		$("#insert-list-modal .modal-title").html("Edit this list");
+		$("#insert-list-modal button[type=submit]").html("Edit list");
+
+		name = $(this).find(".name").html();
+		entityKey = $(this).find(".entity-key").html();
+
+        $("#insert-list-modal input[name=name]").val(name);
+        $("#insert-list-modal input[name=entity_key]").val(entityKey).prop("disabled", false);
+	});
+
+	$(".delete-list").click(function() {
+		entityKey = $(this).find(".entity-key").html();
+
+		$("#delete-list-modal input[name=entity_key]").val(entityKey);
 	});
 }
 
