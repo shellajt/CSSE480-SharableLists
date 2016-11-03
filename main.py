@@ -71,5 +71,5 @@ app = webapp2.WSGIApplication([
     ('/', LoginPage),
     ('/lists', ListsPage),
     ('/inserttask', InsertTaskAction),
-    ('/deletetask', DeleteTaskAction)
+    ('/deletetask', DeleteTaskAction),
 ], debug=True)
