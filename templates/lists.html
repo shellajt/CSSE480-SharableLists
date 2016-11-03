@@ -21,10 +21,7 @@
 				{% for task in tasks_query %}
 				<tr>
 					<td>
-						<input type="checkbox" name="completed-checkbox" value="completed"
-						{% if task.is_complete %}
-							checked
-						{% endif %}>
+						<input type="checkbox" name="completed-checkbox" value="completed" {% if task.is_complete %} checked {% endif %}>
 					</td>
 					<td>{{ task.name }}</td>
 					<td>{{ task.due_date_time }}</td>
@@ -53,7 +50,7 @@
 	</div>
 </div>
 
-<!-- Modal -->
+<!-- Insert Task Modal -->
 <div class="modal fade" id="insert-task-modal" tabindex="-1" role="dialog" aria-labelledby="Insert Task">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
@@ -100,7 +97,7 @@
 	</div>
 </div>
 
-<!-- Modal -->
+<!-- Delete Task Modal -->
 <div class="modal fade" id="delete-task-modal" tabindex="-1" role="dialog" aria-labelledby="Delete Task">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
@@ -118,6 +115,59 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 					<button type="submit" class="btn btn-danger">Delete Task</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- Insert List Modal -->
+<div class="modal fade" id="insert-list-modal" tabindex="-1" role="dialog" aria-labelledby="Insert List">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">Add a List</h4>
+			</div>
+			<form action="/insertlist" method="post" class="form-horizontal">
+				<input type="text" name="entity_key" class="hidden">
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="name-input" class="col-sm-2 control-label">Name</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="name-input" name="name" placeholder="Name">
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<button type="submit" class="btn btn-primary">Add List</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- Delete List Modal -->
+<div class="modal fade" id="delete-list-modal" tabindex="-1" role="dialog" aria-labelledby="Delete List">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">Delete this List</h4>
+			</div>
+			<form action="/deletelist" method="post" class="form-horizontal">
+				<input type="text" name="entity_key" class="hidden">
+				<div class="modal-body">
+					<p>Are you sure you'd like to delete this list?</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<button type="submit" class="btn btn-danger">Delete List</button>
 				</div>
 			</form>
 		</div>
