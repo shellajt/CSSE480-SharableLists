@@ -1,32 +1,100 @@
-{% extends "templates/base_page.html" %} 
-{% block content %}
-<div class="container">
-  <div class="jumbotron">
-    <h1>Welcome</h1>
-    	<hr>
-		<p>
-			Many people keep a to-do list for their personal benefit, but sometimes it would be nice to share those lists with others.
-			Unfortunately, there arn't many easy was to share to-do lists with your friends, family, or coworkers. Our application allows
-			users to share their to-do lists with other people, so that the whole group can easily keep track of whats been done and what's
-			still left to do. A native web application, our product will give users the freedom to manage their to-do lists on any device 
-			with a modern web browser. 
-			<br>
-			<br>
-			Planning a housewarming party with your roommates? Going camping with your old college friends? Preparing for a big business 
-			presentation with your team? Let us help you stay organized, so you can focus on making your event unforgettable.
-		</p>
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-		<p>
-			<div id="login">
-				<a id="login-btn" href="{{ login_url }}" class="btn btn-lg btn-success">Sign in with Google</a>
+<!-- Bootstrap -->
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+	integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+	crossorigin="anonymous">
+
+<!-- Shareable Lists CSS -->
+<link rel="stylesheet" type="text/css"
+	href="/static/stylesheets/style.css">
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+      		<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    	<![endif]-->
+
+<title>Shareable Lists</title>
+
+</head>
+
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">Shareable Lists</a>
 			</div>
-		</p>
-		
-		<p>
-		In order to start saving your to-do lists, you first need to sign in. You can use your Google account.
-		</p>
-    
-  </div>
-</div>
-{% endblock %}
+			<div id="navbar" class="navbar-collapse collapse">{% block
+				links %}{% endblock %}</div>
+		</div>
+	</nav>
+
+	<div id="main">
+
+		<div class="container">
+			<div class="jumbotron">
+				<h1>Welcome</h1>
+				<hr>
+				<p>
+					Many people keep a to-do list for their personal benefit, but
+					sometimes it would be nice to share those lists with others.
+					Unfortunately, there arn't many easy was to share to-do lists with
+					your friends, family, or coworkers. Our application allows users to
+					share their to-do lists with other people, so that the whole group
+					can easily keep track of whats been done and what's still left to
+					do. A native web application, our product will give users the
+					freedom to manage their to-do lists on any device with a modern web
+					browser. <br> <br> Planning a housewarming party with
+					your roommates? Going camping with your old college friends?
+					Preparing for a big business presentation with your team? Let us
+					help you stay organized, so you can focus on making your event
+					unforgettable.
+				</p>
+
+
+				<p>
+				<div id="login">
+					<a id="login-btn" href="{{ login_url }}"
+						class="btn btn-lg btn-success">Sign in with Google</a>
+				</div>
+				</p>
+
+				<p>In order to start saving your to-do lists, you first need to
+					sign in. You can use your Google account.</p>
+
+			</div>
+		</div>
+
+	</div>
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+		integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+		crossorigin="anonymous"></script>
+
+	<script src="/static/js/main.js"></script>
+</body>
+
+</html>
