@@ -10,6 +10,16 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
+- kind: List
+  properties:
+  - name: shared_keys
+  - name: name
+
+- kind: List
+  ancestor: yes
+  properties:
+  - name: name
+
 - kind: Task
   ancestor: yes
   properties:

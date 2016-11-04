@@ -48,20 +48,21 @@
 		</div>
 	</nav>
 
-	<div id="mySidenav" class="sidenav">
+	<div id="sidenav" class="sidenav">
 		<a>Private Lists</a>
 		<hr> 
-		<a href="#" id="list">List1</a> 
-		<a href="#" id="list">List2</a>
-		<a href="#" id="list">List3</a>
-		
-		<br><br><br>
+		{% for list in private_list_query %}
+			<a href="#" class="private_list-link">{{ list.name }}</a>
+			<div class="hidden private_entity-key">{{ list.key.urlsafe() }}</div>
+		{% endfor %}
+		<br><br>
 		
 		<a>Shared Lists</a>
 		<hr> 
-		<a href="#" id="list">List4</a> 
-		<a href="#" id="list">List5</a>
-		<a href="#" id="list">List6</a>
+		{% for list in shared_list_query %}
+			<a href="#" class="shared_list-link">{{ list.name }}</a>
+			<div class="hidden shared_entity-key">{{ list.key.urlsafe() }}</div>
+		{% endfor %}
 	</div>
 
 	<!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
