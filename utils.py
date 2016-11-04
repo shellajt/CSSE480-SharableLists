@@ -11,7 +11,7 @@ def get_parent_key_for_email(email):
     return ndb.Key("Entity", email.lower())
 
 def get_query_for_all_tasks_for_email(email):
-    """ Returns a query for all OBJECTS for this user. """
+    """ Returns a query for all Task objects for this user. """
     parent_key = get_parent_key_for_email(email)
     return Task.query(ancestor=parent_key).order(Task.last_touch_date_time)
 
@@ -19,3 +19,7 @@ def get_query_for_all_lists_for_email(email):
     """ Returns a query for all List objects for this user. """
     parent_key = get_parent_key_for_email(email)
     return List.query(ancestor=parent_key).order(List.name)
+
+def get_query_for_all_task_for_list_key(list_key):
+    """ Returns a query for all Task objects for this List. """
+    return Task.query(ancestor=list_key).order(Task.last_touch_date_time)
