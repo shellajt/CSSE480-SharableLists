@@ -1,10 +1,3 @@
-
-/*
-body {
-  padding: 20px 50px;
-}
-*/
-
 body {
 	padding-top: 70px;
 	padding-left: 20px;
@@ -47,13 +40,17 @@ td.edit-actions {
 .sidenav a {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
-    font-size: 25px;
+    font-size: 1.5em;
     color: #818181;
     display: block;
     transition: 0.3s
 }
 
-#list:hover {
+.private_list-link:hover {
+	color: #FFF;
+}
+
+.shared_list-link:hover {
 	color: #FFF;
 }
 
