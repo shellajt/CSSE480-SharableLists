@@ -53,7 +53,11 @@ td.edit-actions {
     transition: 0.3s
 }
 
-#list:hover {
+.private_list-link:hover {
+	color: #FFF;
+}
+
+.shared_list-link:hover {
 	color: #FFF;
 }
 

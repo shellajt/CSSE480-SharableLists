@@ -86,15 +86,15 @@ shareableLists.populateListLinks = function() {
 	console.log(numPrivateLists);
 	
 	
-	for (var i=1; i < numPrivateLists+1; i++) {
+	for (var i=1; i < numPrivateLists; i++) {
 		var listKey = $(".private_entity-key:nth-child(" + i + ")").text();
 		console.log(listKey);
-		$(".private_list_link:nth-child(" + i +")").attr("href", "/lists?listKey=" + listKey);
+		$(".private_list-link:nth-child(" + i +")").attr("href", "/lists?listKey=" + listKey);
 	}
 	
 	for (var j=0; j < numPrivateLists; j++) {
 		var listKey = $(".shared_entity-key:nth-child(" + i + ")").html();
-		$(".shared_list_link:nth-child(" + i +")").attr("href", "/lists?listKey=" + listKey);
+		$(".shared_list-link:nth-child(" + i +")").attr("href", "/lists?listKey=" + listKey);
 	}
 }
 
