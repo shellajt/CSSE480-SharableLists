@@ -52,16 +52,14 @@
 		<a>Private Lists</a>
 		<hr> 
 		{% for list in private_list_query %}
-			<a href="#" class="private_list-link">{{ list.name }}</a>
-			<div class="hidden private_entity-key">{{ list.key.urlsafe() }}</div>
+			<a href="{{ list.url }}" class="private_list-link">{{ list.name }}</a>
 		{% endfor %}
 		<br><br>
 		
 		<a>Shared Lists</a>
 		<hr> 
 		{% for list in shared_list_query %}
-			<a href="#" class="shared_list-link">{{ list.name }}</a>
-			<div class="hidden shared_entity-key">{{ list.key.urlsafe() }}</div>
+			<a href="{{ list.url }}" class="shared_list-link">{{ list.name }}</a>
 		{% endfor %}
 	</div>
 

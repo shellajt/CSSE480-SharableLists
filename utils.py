@@ -25,6 +25,11 @@ def get_query_for_all_shared_lists_for_email(email):
     shared_key = get_parent_key_for_email(email)
     return List.query(List.shared_keys == shared_key).order(List.name)
 
-def get_query_for_all_task_for_list_key(list_key):
+def get_query_for_all_task_for_list_key(list_key_urlsafe):
     """ Returns a query for all Task objects for this List. """
+    print(list_key_urlsafe)
+    list_key = ndb.Key(urlsafe=list_key_urlsafe)
     return Task.query(ancestor=list_key).order(Task.last_touch_date_time)
+#     kind_string = list_key.kind()
+#     ident = list_key.id()
+#     return Task.query(ancestor=ndb.Key(kind_string, ident)).order(Task.last_touch_date_time)

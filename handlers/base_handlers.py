@@ -13,11 +13,13 @@ class BasePage(webapp2.RequestHandler):
     def get(self):
         user = users.get_current_user()
         if user:
+            print(self.request.get("listKey"))
             email = user.email().lower()
 #           account_info = utils.get_account_info_for_email(email, create_if_none=True)  # Remove if not using AccountInfo
             values = {"user_email": email,
 #                   "account_info": account_info,
-                      "logout_url": users.create_logout_url("/")}
+                      "logout_url": users.create_logout_url("/"),
+                      "listKey": self.request.get("listKey")}
             self.update_values(email, values)  # TODO: Update what is passed to subclass function as needed
             template = main.jinja_env.get_template(self.get_template())
             self.response.out.write(template.render(values))     

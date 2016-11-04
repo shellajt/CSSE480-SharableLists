@@ -79,26 +79,6 @@ shareableLists.enableButtons = function() {
 	});
 }
 
-shareableLists.populateListLinks = function() {
-	var numPrivateLists = $(".private_list-link").length;
-	var numSharedLists = $(".shared_list-link").length;
-	
-	console.log(numPrivateLists);
-	
-	
-	for (var i=1; i < numPrivateLists+1; i++) {
-		var listKey = $(".private_entity-key:nth-child(" + i + ")").text();
-		console.log(listKey);
-		$(".private_list_link:nth-child(" + i +")").attr("href", "/lists?listKey=" + listKey);
-	}
-	
-	for (var j=0; j < numPrivateLists; j++) {
-		var listKey = $(".shared_entity-key:nth-child(" + i + ")").html();
-		$(".shared_list_link:nth-child(" + i +")").attr("href", "/lists?listKey=" + listKey);
-	}
-}
-
-
 function toggleNav() {
 	if (!shareableLists.sideNavShown) {
 		openNav();
@@ -124,5 +104,4 @@ function closeNav() {
 $(document).ready(function() {
 	shareableLists.enableButtons();
 	shareableLists.attachEventHandlers();
-	shareableLists.populateListLinks();
 });

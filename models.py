@@ -16,6 +16,7 @@ class List(ndb.Model):
     name = ndb.StringProperty()
     folder_key = ndb.KeyProperty(kind=Folder)
     shared_keys = ndb.KeyProperty(repeated=True)
+    url = ndb.StringProperty()
 
 class Task(ndb.Model):
     """ Information about a task within a list """

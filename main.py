@@ -40,6 +40,7 @@ class ListsPage(BasePage):
         values['private_list_query'] = utils.get_query_for_all_private_lists_for_email(email)
         values['shared_list_query'] = utils.get_query_for_all_shared_lists_for_email(email)
         values['tasks_query'] = utils.get_query_for_all_tasks_for_email(email)
+#         values['tasks_query'] = utils.get_query_for_all_task_for_list_key(values['listKey'])
 
     def get_template(self):
         return "templates/lists.html"
@@ -78,6 +79,8 @@ class InsertListAction(BaseAction):
             list = List(parent=utils.get_parent_key_for_email(email))
 
         list.name = self.request.get("name")
+        print("URLSAFE: " +list.key.urlsafe())
+        list.url = "/lists?listKey=" + list.key.urlsafe()
         # TODO: Add fields for shared lists
 
         list.put()
