@@ -37,6 +37,8 @@ class LoginPage(webapp2.RequestHandler):
 
 class ListsPage(BasePage):
     def update_values(self, email, values):
+        values['private_list_query'] = utils.get_query_for_all_private_lists_for_email(email)
+        values['shared_list_query'] = utils.get_query_for_all_shared_lists_for_email(email)
         values['tasks_query'] = utils.get_query_for_all_tasks_for_email(email)
 
     def get_template(self):
