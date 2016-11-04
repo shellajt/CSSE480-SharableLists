@@ -39,9 +39,12 @@ class ListsPage(BasePage):
     def update_values(self, email, values):
         values['private_list_query'] = utils.get_query_for_all_private_lists_for_email(email)
         values['shared_list_query'] = utils.get_query_for_all_shared_lists_for_email(email)
-        values['tasks_query'] = utils.get_query_for_all_tasks_for_email(email)
-#         values['tasks_query'] = utils.get_query_for_all_task_for_list_key(values['listKey'])
-
+       
+        if values['listKey']:
+            values['tasks_query'] = utils.get_query_for_all_task_for_list_key(values['listKey'])
+        else: 
+            values['tasks_query'] = utils.get_query_for_all_tasks_for_email(email)
+    
     def get_template(self):
         return "templates/lists.html"
 
@@ -79,11 +82,11 @@ class InsertListAction(BaseAction):
             list = List(parent=utils.get_parent_key_for_email(email))
 
         list.name = self.request.get("name")
-        print("URLSAFE: " +list.key.urlsafe())
-        list.url = "/lists?listKey=" + list.key.urlsafe()
+        list_key = list.put()
+        print("URLSAFE: " +list_key.urlsafe())
+        list.url = "/lists?listKey=" + list_key.urlsafe()
         # TODO: Add fields for shared lists
-
-        list.put()
+        list.put()    
         self.redirect(self.request.referer)
 
 class DeleteListAction(BaseAction):
