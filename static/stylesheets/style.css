@@ -8,6 +8,12 @@ body {
 	padding-bottom: 25px;
 }
 
+textarea {
+	overflow: scroll;
+	margin-left: 15px;
+	width: 78%;
+}
+
 #login-a {
 	padding-left: 20px;
 }
