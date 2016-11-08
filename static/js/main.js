@@ -66,17 +66,17 @@ shareableLists.enableButtons = function() {
 		$("#insert-list-modal .modal-title").html("Edit this list");
 		$("#insert-list-modal button[type=submit]").html("Edit list");
 
-		name = $("#edit-list-name").html();
+		name = $("#current-list-name").html();
 		console.log(name);
-		entityKey = $("#edit-list-key").html();
+		entityKey = $("#current-list-key").html();
 		console.log(entityKey);
 
         $("#insert-list-modal input[name=name]").val(name);
         $("#insert-list-modal input[name=entity_key]").val(entityKey).prop("disabled", false);
     });
 
-    $(".delete-list").click(function() {
-        entityKey = $(this).find(".entity-key").html();
+    $("#delete-list").click(function() {
+        entityKey = $("#current-list-key").html();
 
         $("#delete-list-modal input[name=entity_key]").val(entityKey);
     });
