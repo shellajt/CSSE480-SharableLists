@@ -66,10 +66,9 @@ shareableLists.enableButtons = function() {
 		$("#insert-list-modal .modal-title").html("Edit this list");
 		$("#insert-list-modal button[type=submit]").html("Edit list");
 
-		name = $(this).find(".list-name").html();
-		console.log($(this));
+		name = $("#edit-list-name").html();
 		console.log(name);
-		entityKey = $(this).find(".entity-key").html();
+		entityKey = $("#edit-list-key").html();
 		console.log(entityKey);
 
         $("#insert-list-modal input[name=name]").val(name);

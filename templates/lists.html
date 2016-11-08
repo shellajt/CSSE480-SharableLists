@@ -7,7 +7,10 @@
 	<li class="dropdown">
     	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <span class="glyphicon glyphicon-option-vertical"></span></a>
         <ul class="dropdown-menu">
-        	<li> <a id="edit-list" href="#" data-toggle="modal" data-target="#insert-list-modal">Edit List</a></li>
+        	<li> <a id="edit-list" href="#" data-toggle="modal" data-target="#insert-list-modal">Edit List</a>
+				<div id="edit-list-key" class="hidden">{{ listKey }}</div>
+				<div id="edit-list-name" class="hidden">{{ list_name }}</div>
+        	</li>
     		<li> <a id="delete-list" href="#" data-toggle="modal" data-target="#delete-list-modal">Delete List</a></li></li>
    			<li><a href="{{ logout_url }}">Logout</a></li>
         </ul>
@@ -71,7 +74,6 @@
 				<h4 class="modal-title" id="myModalLabel">Add a Task</h4>
 			</div>
 			<form action="/inserttask" method="post" class="form-horizontal">
-				<input type="text" name="listKey" class="hidden" value="{{ listKey }}">
 				<input type="text" name="entity_key" class="hidden">
 				<div class="modal-body">
 					<div class="form-group">
@@ -143,8 +145,7 @@
 				<h4 class="modal-title" id="myModalLabel">Add a List</h4>
 			</div>
 			<form action="/insertlist" method="post" class="form-horizontal">
-				<input type="text" name="listKey" class="hidden" value="{{ listKey }}">
-				<input type="text" name="list-name" class="hidden" value="{{ list_name }}">
+				<input type="text" name="listKey" id="modal-list-key" class="hidden" value="{{ listKey }}">
 				<input type="text" name="entity_key" class="hidden">
 				<div class="modal-body">
 					<div class="form-group">
