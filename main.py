@@ -124,6 +124,23 @@ class ToggleCompleteAction(webapp2.RequestHandler):
         self.response.headers["Content-Type"] = "application/json"
         response = {"index": index, "is_complete": task.is_complete}
         self.response.out.write(json.dumps(response))
+        
+class InsertCommentAction(webapp2.RequestHandler):
+    def post(self):
+        new_comment = self.request.get("comment")
+        task_key = ndb.Key(urlsafe=self.request.get("task-key"))
+        task = task_key.get()
+
+        current_comments = task.comments
+        
+        if current_comments:
+            updated_comments = current_comments.append(new_comment)
+            task.comments = updated_comments
+        else:
+            task.comments = [new_comment]
+        task.put()
+
+        self.redirect(self.request.referer)
 
 app = webapp2.WSGIApplication([
     ('/', LoginPage),
@@ -132,5 +149,6 @@ app = webapp2.WSGIApplication([
     ('/deletetask', DeleteTaskAction),
     ('/insertlist', InsertListAction),
     ('/deletelist', DeleteListAction),
-    ('/togglecomplete', ToggleCompleteAction)
+    ('/togglecomplete', ToggleCompleteAction),
+    ('/postcomment', InsertCommentAction)
 ], debug=True)
