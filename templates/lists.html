@@ -14,6 +14,7 @@
 	</li>
 </ul>
 {% endblock %} {% block content %}
+<h1 id="list_name">{{ list_name }} </h1>
 <div class="container">
 	<div class="table-wrapper">
 		<table class="table table-striped">
@@ -142,6 +143,8 @@
 				<h4 class="modal-title" id="myModalLabel">Add a List</h4>
 			</div>
 			<form action="/insertlist" method="post" class="form-horizontal">
+				<input type="text" name="listKey" class="hidden" value="{{ listKey }}">
+				<input type="text" name="list-name" class="hidden" value="{{ list_name }}">
 				<input type="text" name="entity_key" class="hidden">
 				<div class="modal-body">
 					<div class="form-group">

@@ -57,16 +57,20 @@ shareableLists.enableButtons = function() {
         $("#insert-list-modal .modal-title").html("Add a list");
         $("#insert-list-modal button[type=submit]").html("Add list");
 
-        $("#insert-list-modal input[name=name]").val("");
-        $("#insert-list-modal input[name=entity_key]").val("").prop("disabled", true);
-    });
+		$("#insert-list-modal input[name=name]").val("");
+		$("#name-input").focus();
+		$("#insert-list-modal input[name=entity_key]").val("").prop("disabled", true);
+	});
 
-    $(".edit-list").click(function() {
-        $("#insert-list-modal .modal-title").html("Edit this list");
-        $("#insert-list-modal button[type=submit]").html("Edit list");
+	$("#edit-list").click(function() {
+		$("#insert-list-modal .modal-title").html("Edit this list");
+		$("#insert-list-modal button[type=submit]").html("Edit list");
 
-        name = $(this).find(".name").html();
-        entityKey = $(this).find(".entity-key").html();
+		name = $(this).find(".list-name").html();
+		console.log($(this));
+		console.log(name);
+		entityKey = $(this).find(".entity-key").html();
+		console.log(entityKey);
 
         $("#insert-list-modal input[name=name]").val(name);
         $("#insert-list-modal input[name=entity_key]").val(entityKey).prop("disabled", false);

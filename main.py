@@ -43,9 +43,14 @@ class ListsPage(BasePage):
 
         if values['listKey']:
             values['tasks_query'] = utils.get_query_for_all_task_for_list_key(values['listKey'])
+            list_key = ndb.Key(urlsafe=values['listKey'])
+            list_obj = list_key.get();
+            values['list_name'] = list_obj.name;
         else:
             values['tasks_query'] = utils.get_query_for_all_tasks_for_email(email)
-
+            values['list_name'] = "All Tasks";
+        
+        
     def get_template(self):
         return "templates/lists.html"
 
@@ -88,7 +93,6 @@ class InsertListAction(BaseAction):
 
         list.name = self.request.get("name")
         list_key = list.put()
-        print("URLSAFE: " +list_key.urlsafe())
         list.url = "/lists?listKey=" + list_key.urlsafe()
         # TODO: Add fields for shared lists
         list.put()

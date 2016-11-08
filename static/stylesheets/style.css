@@ -3,6 +3,11 @@ body {
 	padding-left: 20px;
 }
 
+#list_name {
+	text-align: center;
+	padding-bottom: 25px;
+}
+
 #login-a {
 	padding-left: 20px;
 }
