@@ -13,7 +13,7 @@ def get_parent_key_for_email(email):
 def get_query_for_all_tasks_for_email(email):
     """ Returns a query for all Task objects for this user. """
     parent_key = get_parent_key_for_email(email)
-    return Task.query(ancestor=parent_key).order(Task.last_touch_date_time)
+    return Task.query(ancestor=parent_key).order(Task.due_date_time)
 
 def get_query_for_all_private_lists_for_email(email):
     """ Returns a query for all List objects for this user. """
@@ -29,7 +29,4 @@ def get_query_for_all_task_for_list_key(list_key_urlsafe):
     """ Returns a query for all Task objects for this List. """
     print(list_key_urlsafe)
     list_key = ndb.Key(urlsafe=list_key_urlsafe)
-    return Task.query(ancestor=list_key).order(Task.last_touch_date_time)
-#     kind_string = list_key.kind()
-#     ident = list_key.id()
-#     return Task.query(ancestor=ndb.Key(kind_string, ident)).order(Task.last_touch_date_time)
+    return Task.query(ancestor=list_key).order(Task.due_date_time)

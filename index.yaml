@@ -23,4 +23,9 @@ indexes:
 - kind: Task
   ancestor: yes
   properties:
+  - name: due_date_time
+
+- kind: Task
+  ancestor: yes
+  properties:
   - name: last_touch_date_time
