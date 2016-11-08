@@ -114,7 +114,8 @@ shareableLists.enableButtons = function() {
         
         stringComments = [];
         for (var i = 0; i < comments.length; i++) {
-        	stringComments.push(String(comments[i]));
+        	console.log(comments[i]);
+        	stringComments.push(comments[i]);
         	stringComments.push("/n/n");
         }
         
