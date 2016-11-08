@@ -58,6 +58,7 @@ shareableLists.enableButtons = function() {
 		$("#insert-list-modal button[type=submit]").html("Add list");
 
 		$("#insert-list-modal input[name=name]").val("");
+		$("#name-input").focus();
 		$("#insert-list-modal input[name=entity_key]").val("").prop("disabled", true);
 	});
 

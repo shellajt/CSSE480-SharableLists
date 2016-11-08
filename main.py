@@ -87,7 +87,6 @@ class InsertListAction(BaseAction):
 
         list.name = self.request.get("name")
         list_key = list.put()
-        print("URLSAFE: " +list_key.urlsafe())
         list.url = "/lists?listKey=" + list_key.urlsafe()
         # TODO: Add fields for shared lists
         list.put()
