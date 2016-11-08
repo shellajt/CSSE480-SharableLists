@@ -103,6 +103,12 @@ class InsertListAction(BaseAction):
 class DeleteListAction(BaseAction):
     def handle_post(self, email):
         list_key = ndb.Key(urlsafe=self.request.get("entity_key"))
+        
+        tasks = utils.get_query_for_all_task_for_list_key(self.request.get("entity_key"))
+        
+        for task in tasks:
+            task.key.delete()
+        
         list_key.delete()
         self.redirect('/')
 
