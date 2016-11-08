@@ -39,12 +39,12 @@ class ListsPage(BasePage):
     def update_values(self, email, values):
         values['private_list_query'] = utils.get_query_for_all_private_lists_for_email(email)
         values['shared_list_query'] = utils.get_query_for_all_shared_lists_for_email(email)
-       
+
         if values['listKey']:
             values['tasks_query'] = utils.get_query_for_all_task_for_list_key(values['listKey'])
-        else: 
+        else:
             values['tasks_query'] = utils.get_query_for_all_tasks_for_email(email)
-    
+
     def get_template(self):
         return "templates/lists.html"
 
@@ -54,7 +54,11 @@ class InsertTaskAction(BaseAction):
             task_key = ndb.Key(urlsafe=self.request.get("entity_key"))
             task = task_key.get()
         else:
-            task = Task(parent=utils.get_parent_key_for_email(email))
+            if self.request.get("listKey") != "":
+                key = ndb.Key(urlsafe=self.request.get("listKey"))
+                task = Task(parent=key)
+            else:
+                task = Task(parent=utils.get_parent_key_for_email(email))
 
         task.name = self.request.get("name")
         task.due_date_time = datetime.datetime.strptime( self.request.get("due_date_time"), "%Y-%m-%dT%H:%M" )
@@ -86,8 +90,8 @@ class InsertListAction(BaseAction):
         print("URLSAFE: " +list_key.urlsafe())
         list.url = "/lists?listKey=" + list_key.urlsafe()
         # TODO: Add fields for shared lists
-        list.put()    
-        self.redirect(self.request.referer)
+        list.put()
+        self.redirect(list.url)
 
 class DeleteListAction(BaseAction):
     def handle_post(self, email):

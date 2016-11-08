@@ -69,6 +69,7 @@
 				<h4 class="modal-title" id="myModalLabel">Add a Task</h4>
 			</div>
 			<form action="/inserttask" method="post" class="form-horizontal">
+				<input type="text" name="listKey" class="hidden" value="{{ listKey }}">
 				<input type="text" name="entity_key" class="hidden">
 				<div class="modal-body">
 					<div class="form-group">
