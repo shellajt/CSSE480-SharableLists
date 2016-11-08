@@ -54,7 +54,7 @@ class InsertTaskAction(BaseAction):
             task_key = ndb.Key(urlsafe=self.request.get("entity_key"))
             task = task_key.get()
         else:
-            if self.request.get("listKey") != "":
+            if self.request.get("listKey"):
                 key = ndb.Key(urlsafe=self.request.get("listKey"))
                 task = Task(parent=key)
             else:
