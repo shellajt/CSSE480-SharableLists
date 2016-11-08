@@ -112,6 +112,12 @@ shareableLists.enableButtons = function() {
         comments = $(this).find(".comments").html();
         taskKey = $(this).find(".entity-key").html();
         
+        stringComments = [];
+        for (var i = 0; i < comments.length; i++) {
+        	stringComments.push(String(comments[i]));
+        	stringComments.push("/n/n");
+        }
+        
         $("#task-detail-modal input[name=name]").val(name).prop("disabled", true);
         var taskDueDate = new Date(due_date_time);
         $("#task-detail-modal input[name=due_date_time]").val(taskDueDate.toISOString().substring(0, 16)).prop("disabled", true);
@@ -122,7 +128,7 @@ shareableLists.enableButtons = function() {
             $("#task-detail-modal input[name=is_complete]").prop('checked', false).prop("disabled", true);
         }
         $("#task-detail-modal input[name=task-key]").val(taskKey);
-        $("#task-detail-modal #comments-box").val(comments).prop("disabled", true);
+        $("#task-detail-modal #comments-box").val(stringComments).prop("disabled", true);
     
     });
 };

@@ -133,9 +133,9 @@ class InsertCommentAction(webapp2.RequestHandler):
 
         current_comments = task.comments
         
-        if current_comments:
-            updated_comments = current_comments.append(new_comment)
-            task.comments = updated_comments
+        if current_comments is not None:
+            current_comments.append(new_comment)
+            task.comments = current_comments
         else:
             task.comments = [new_comment]
         task.put()
