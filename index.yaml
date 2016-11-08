@@ -20,6 +20,11 @@ indexes:
   properties:
   - name: name
 
+- kind: List
+  ancestor: yes
+  properties:
+  - name: shared_keys
+
 - kind: Task
   ancestor: yes
   properties:
