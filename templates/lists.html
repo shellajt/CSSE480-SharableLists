@@ -34,13 +34,13 @@
 			<tbody>
 				{% for task in tasks_query %}
 				<tr>
-					<td>
+					<td class="clickable">
 						<input type="checkbox" class= "task-completed-checkbox"name="completed-checkbox" value="completed" {% if task.is_complete %} checked {% endif %}>
 						<div class="hidden entity-key checkbox-entity-key">{{ task.key.urlsafe() }}</div>
 					</td>
-					<td>{{ task.name }}</td>
-					<td>{{ task.due_date_time }}</td>
-					<td>{{ task.note }}</td>
+					<td class="clickable">{{ task.name }}</td>
+					<td class="clickable">{{ task.due_date_time }}</td>
+					<td class="clickable">{{ task.note }}</td>
 					<td>
 						<!-- Indicates a successful or positive action -->
 						<button type="button" class="btn btn-success btn-xs edit-task" data-toggle="modal" data-target="#insert-task-modal">

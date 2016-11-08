@@ -105,7 +105,7 @@ shareableLists.enableButtons = function() {
         });
     });
 
-    $("tr").click(function() {
+    $(".clickable").click(function() {
     	$('#task-detail-modal').modal('show');
 
     	name = $(this).find(".name").html();
@@ -114,7 +114,11 @@ shareableLists.enableButtons = function() {
         is_complete = $(this).find(".is_complete").html();
         comments = $(this).find(".comments").html();
         taskKey = $(this).find(".entity-key").html();
-        stringComments = shareableLists.parseComments(comments);
+        if (comments != null) {
+        	stringComments = shareableLists.parseComments(comments);
+        } else {
+        	stringComments = "";
+        }
 
         $("#task-detail-modal input[name=name]").val(name).prop("readonly", true);
         var taskDueDate = new Date(due_date_time);
