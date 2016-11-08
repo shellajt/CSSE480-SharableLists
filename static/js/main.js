@@ -112,12 +112,7 @@ shareableLists.enableButtons = function() {
         comments = $(this).find(".comments").html();
         taskKey = $(this).find(".entity-key").html();
         
-        stringComments = [];
-        for (var i = 0; i < comments.length; i++) {
-        	console.log(comments[i]);
-        	stringComments.push(comments[i]);
-        	stringComments.push("/n/n");
-        }
+        stringComments = shareableLists.parseComments(comments);
         
         $("#task-detail-modal input[name=name]").val(name).prop("disabled", true);
         var taskDueDate = new Date(due_date_time);
@@ -133,6 +128,26 @@ shareableLists.enableButtons = function() {
     
     });
 };
+
+shareableLists.parseComments = function(comments) {
+	comments = comments.substr(1, comments.length-2);
+	splitArr = comments.split(",");
+	commentsArr = [];
+	for (var i = 0; i < splitArr.length; i++) {
+		currentString = splitArr[i];
+		if(i == 0) {
+			commentsArr.push(currentString.substr(2, currentString.length-3));
+		} else {
+			commentsArr.push(currentString.substr(3, currentString.length-4));
+		}
+	}
+	
+	commentString = "";
+	for (var j = 0; j < commentsArr.length; j++) {
+		commentString += commentsArr[j] + "\n";
+	}
+	return commentString;
+}
 
 function toggleNav() {
     if (!shareableLists.sideNavShown) {
