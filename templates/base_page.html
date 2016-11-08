@@ -55,14 +55,14 @@
 		<a>Private Lists</a>
 		<hr>
 		{% for list in private_list_query %}
-			<a href="{{ list.url }}" class="private-list-link">- {{ list.name }}</a>
+			<a href="{{ list.url }}" class="private-list-link">&bull; {{ list.name }}</a>
 		{% endfor %}
 		<br><br>
 
 		<a>Shared Lists</a>
 		<hr>
 		{% for list in shared_list_query %}
-			<a href="{{ list.url }}" class="shared-list-link">- {{ list.name }}</a>
+			<a href="{{ list.url }}" class="shared-list-link">&bull; {{ list.name }}</a>
 		{% endfor %}
 	</div>
 
