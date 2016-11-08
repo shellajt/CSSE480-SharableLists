@@ -27,6 +27,5 @@ def get_query_for_all_shared_lists_for_email(email):
 
 def get_query_for_all_task_for_list_key(list_key_urlsafe):
     """ Returns a query for all Task objects for this List. """
-    print(list_key_urlsafe)
     list_key = ndb.Key(urlsafe=list_key_urlsafe)
     return Task.query(ancestor=list_key).order(Task.due_date_time)
