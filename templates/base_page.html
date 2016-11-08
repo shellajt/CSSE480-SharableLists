@@ -36,7 +36,7 @@
 </head>
 
 <body>
-	<nav class="navbar navbar-inverse navbar-fixed-top">	
+	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<a class="glyphicon glyphicon-menu-hamburger btn btn-lg navbar-left" onclick="toggleNav()" id="sidebar-toggle"></a>
 		<div class="container">
 			<div class="navbar-header">
@@ -50,22 +50,25 @@
 
 	<div id="sidenav" class="sidenav">
 		<a>Private Lists</a>
-		<hr> 
+		<hr>
 		<a href="/lists" class="private-list-link">All Tasks</a>
 		{% for list in private_list_query %}
 			<a href="{{ list.url }}" class="private-list-link">{{ list.name }}</a>
 		{% endfor %}
 		<br><br>
-		
+
 		<a>Shared Lists</a>
-		<hr> 
-		{% for list in shared_list_query %}
+		<hr>
+		{% for list in owner_shared_list_query %}
+			<a href="{{ list.url }}" class="shared-list-link">{{ list.name }}</a>
+		{% endfor %}
+		{% for list in sharee_shared_list_query %}
 			<a href="{{ list.url }}" class="shared-list-link">{{ list.name }}</a>
 		{% endfor %}
 	</div>
 
 	<!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
-	
+
 	<div id="main">
 
 	{% block content %}{% endblock %}

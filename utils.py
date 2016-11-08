@@ -18,12 +18,20 @@ def get_query_for_all_tasks_for_email(email):
 def get_query_for_all_private_lists_for_email(email):
     """ Returns a query for all List objects for this user. """
     parent_key = get_parent_key_for_email(email)
-    return List.query(ancestor=parent_key).order(List.name)
+    invalid_key = get_parent_key_for_email("invalid")
+    return List.query(ancestor=parent_key).filter(List.shared_keys == invalid_key)
 
-def get_query_for_all_shared_lists_for_email(email):
+def get_query_for_all_shared_lists_for_sharee_email(email):
     """ Returns a query for all List objects for this user. """
     shared_key = get_parent_key_for_email(email)
     return List.query(List.shared_keys == shared_key).order(List.name)
+
+def get_query_for_all_shared_lists_for_owner_email(email):
+    """ Returns a query for all List objects for this user. """
+    parent_key = get_parent_key_for_email(email)
+    invalid_key = get_parent_key_for_email("invalid")
+    query = List.query(ancestor=parent_key)
+    return query.filter(List.shared_keys != invalid_key)
 
 def get_query_for_all_task_for_list_key(list_key_urlsafe):
     """ Returns a query for all Task objects for this List. """

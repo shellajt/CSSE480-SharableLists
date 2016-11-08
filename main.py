@@ -39,7 +39,8 @@ class LoginPage(webapp2.RequestHandler):
 class ListsPage(BasePage):
     def update_values(self, email, values):
         values['private_list_query'] = utils.get_query_for_all_private_lists_for_email(email)
-        values['shared_list_query'] = utils.get_query_for_all_shared_lists_for_email(email)
+        values['owner_shared_list_query'] = utils.get_query_for_all_shared_lists_for_owner_email(email)
+        values['sharee_shared_list_query'] = utils.get_query_for_all_shared_lists_for_sharee_email(email)
 
         if values['listKey']:
             values['tasks_query'] = utils.get_query_for_all_task_for_list_key(values['listKey'])
@@ -97,18 +98,28 @@ class InsertListAction(BaseAction):
         list_key = list.put()
         list.url = "/lists?listKey=" + list_key.urlsafe()
         # TODO: Add fields for shared lists
+        shared_emails = self.request.get("shared").split(", ")
+        shared_keys = []
+        print(shared_emails)
+        for current_email in shared_emails:
+            if not (current_email == ""):
+                shared_keys.append(utils.get_parent_key_for_email(current_email))
+            elif (current_email == "") and (len(shared_emails) == 1):
+                shared_keys.append(utils.get_parent_key_for_email("invalid"))
+        list.shared_keys = shared_keys
+
         list.put()
         self.redirect(list.url)
 
 class DeleteListAction(BaseAction):
     def handle_post(self, email):
         list_key = ndb.Key(urlsafe=self.request.get("entity_key"))
-        
+
         tasks = utils.get_query_for_all_task_for_list_key(self.request.get("entity_key"))
-        
+
         for task in tasks:
             task.key.delete()
-        
+
         list_key.delete()
         self.redirect('/')
 
