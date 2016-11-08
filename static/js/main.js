@@ -115,17 +115,17 @@ shareableLists.enableButtons = function() {
         
         stringComments = shareableLists.parseComments(comments);
         
-        $("#task-detail-modal input[name=name]").val(name).prop("disabled", true);
+        $("#task-detail-modal input[name=name]").val(name).prop("readonly", true);
         var taskDueDate = new Date(due_date_time);
-        $("#task-detail-modal input[name=due_date_time]").val(taskDueDate.toISOString().substring(0, 16)).prop("disabled", true);
-        $("#task-detail-modal input[name=note]").val(note).prop("disabled", true);
+        $("#task-detail-modal input[name=due_date_time]").val(taskDueDate.toISOString().substring(0, 16)).prop("readonly", true);
+        $("#task-detail-modal input[name=note]").val(note).prop("readonly", true);
         if (is_complete === "True") {
             $("#task-detail-modal input[name=is_complete]").prop('checked', true).prop("disabled", true);
         } else {
             $("#task-detail-modal input[name=is_complete]").prop('checked', false).prop("disabled", true);
         }
         $("#task-detail-modal input[name=task-key]").val(taskKey);
-        $("#task-detail-modal #comments-box").val(stringComments).prop("disabled", true);
+        $("#task-detail-modal #comments-box").val(stringComments).prop("readonly", true);
     
     });
 };
