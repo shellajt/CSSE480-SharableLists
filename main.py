@@ -116,7 +116,10 @@ class InsertListAction(BaseAction):
             list.shared = False
 
         list.put()
-        self.redirect(list.url)
+        if (email.lower() in shared_emails):
+            self.redirect(list.url)
+        else:
+            self.redirect("/#")
 
 class DeleteListAction(BaseAction):
     def handle_post(self, email):
