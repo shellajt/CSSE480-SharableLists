@@ -102,9 +102,9 @@ class InsertListAction(BaseAction):
 
 class DeleteListAction(BaseAction):
     def handle_post(self, email):
-        task_key = ndb.Key(urlsafe=self.request.get("entity_key"))
-        task_key.delete()
-        self.redirect(self.request.referer)
+        list_key = ndb.Key(urlsafe=self.request.get("entity_key"))
+        list_key.delete()
+        self.redirect('/')
 
 class ToggleCompleteAction(webapp2.RequestHandler):
     def post(self):

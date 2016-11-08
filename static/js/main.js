@@ -19,7 +19,7 @@ shareableLists.enableButtons = function() {
 
         // TODO: Deal w/ timezones
         var currentDate = new Date();
-        console.log(currentDate.toISOString().substring(0, 16));
+        // console.log(currentDate.toISOString().substring(0, 16));
         $("#insert-task-modal input[name=due_date_time]").val(currentDate.toISOString().substring(0, 16));
         $("#insert-task-modal input[name=note]").val("");
         $("#insert-task-modal input[name=is_complete]").val(false);
@@ -68,25 +68,21 @@ shareableLists.enableButtons = function() {
         $("#insert-list-modal .modal-title").html("Edit this list");
         $("#insert-list-modal button[type=submit]").html("Edit list");
 
-        name = $(this).find(".list-name").html();
-        console.log($(this));
-        console.log(name);
-        entityKey = $(this).find(".entity-key").html();
-        console.log(entityKey);
+		name = $("#current-list-name").html();
+		entityKey = $("#current-list-key").html();
 
         $("#insert-list-modal input[name=name]").val(name);
         $("#insert-list-modal input[name=entity_key]").val(entityKey).prop("disabled", false);
     });
 
-    $(".delete-list").click(function() {
-        entityKey = $(this).find(".entity-key").html();
+    $("#delete-list").click(function() {
+        entityKey = $("#current-list-key").html();
 
         $("#delete-list-modal input[name=entity_key]").val(entityKey);
     });
 
     $(".task-completed-checkbox").click(function() {
         var index = $(".task-completed-checkbox").index(this);
-        console.log(index);
         var dataToSend = {
             "index": index,
             "entityKey": $(".checkbox-entity-key").eq(index).text()
@@ -95,11 +91,9 @@ shareableLists.enableButtons = function() {
         $.post("/togglecomplete", dataToSend).done(function(data) {
             console.log("Successful toggle complete post: " + JSON.stringify(data));
             if (data.is_complete) {
-                console.log("True");
                 $(".task-completed-checkbox").eq(data.index).prop("checked", true);
 				$(".edit-task .is_complete").eq(data.index).html("True")
             } else if (!data.is_complete) {
-                console.log("False");
                 $(".task-completed-checkbox").eq(data.index).prop("checked", false);
 				$(".edit-task .is_complete").eq(data.index).html("False");
             }
