@@ -101,6 +101,34 @@ shareableLists.enableButtons = function() {
             console.log("POST Request Failed: " + textStatus + ", " + error);
         });
     });
+    
+    $("tr").click(function() {
+    	$('#task-detail-modal').modal('show');
+    	
+    	name = $(this).find(".name").html();
+        due_date_time = $(this).find(".due_date_time").html();
+        note = $(this).find(".note").html();
+        is_complete = $(this).find(".is_complete").html();
+        taskKey = $(this).find(".entity-key").html();
+        
+        console.log(name);
+        console.log(due_date_time);
+        console.log(note);
+        console.log(is_complete);
+        console.log(taskKey);
+        
+        $("#task-detail-modal input[name=name]").val(name).prop("disabled", true);
+        var taskDueDate = new Date(due_date_time);
+        $("#task-detail-modal input[name=due_date_time]").val(taskDueDate.toISOString().substring(0, 16)).prop("disabled", true);
+        $("#task-detail-modal input[name=note]").val(note).prop("disabled", true);
+        if (is_complete === "True") {
+            $("#task-detail-modal input[name=is_complete]").prop('checked', true).prop("disabled", true);
+        } else {
+            $("#task-detail-modal input[name=is_complete]").prop('checked', false).prop("disabled", true);
+        }
+        $("#task-detail-modal input[name=task-key]").val(taskKey).prop("disabled", false);
+    
+    });
 };
 
 function toggleNav() {
