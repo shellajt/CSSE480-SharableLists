@@ -114,21 +114,41 @@ shareableLists.enableButtons = function() {
         is_complete = $(this).find(".is_complete").html();
         comments = $(this).find(".comments").html();
         taskKey = $(this).find(".entity-key").html();
+        stringComments = shareableLists.parseComments(comments);
 
-        $("#task-detail-modal input[name=name]").val(name).prop("disabled", true);
+        $("#task-detail-modal input[name=name]").val(name).prop("readonly", true);
         var taskDueDate = new Date(due_date_time);
-        $("#task-detail-modal input[name=due_date_time]").val(taskDueDate.toISOString().substring(0, 16)).prop("disabled", true);
-        $("#task-detail-modal input[name=note]").val(note).prop("disabled", true);
+        $("#task-detail-modal input[name=due_date_time]").val(taskDueDate.toISOString().substring(0, 16)).prop("readonly", true);
+        $("#task-detail-modal input[name=note]").val(note).prop("readonly", true);
         if (is_complete === "True") {
             $("#task-detail-modal input[name=is_complete]").prop('checked', true).prop("disabled", true);
         } else {
             $("#task-detail-modal input[name=is_complete]").prop('checked', false).prop("disabled", true);
         }
         $("#task-detail-modal input[name=task-key]").val(taskKey);
-        $("#task-detail-modal #comments-box").val(comments).prop("disabled", true);
-
+        $("#task-detail-modal #comments-box").val(stringComments).prop("readonly", true);
     });
 };
+
+shareableLists.parseComments = function(comments) {
+	comments = comments.substr(1, comments.length-2);
+	splitArr = comments.split(",");
+	commentsArr = [];
+	for (var i = 0; i < splitArr.length; i++) {
+		currentString = splitArr[i];
+		if(i == 0) {
+			commentsArr.push(currentString.substr(2, currentString.length-3));
+		} else {
+			commentsArr.push(currentString.substr(3, currentString.length-4));
+		}
+	}
+
+	commentString = "";
+	for (var j = 0; j < commentsArr.length; j++) {
+		commentString += commentsArr[j] + "\n";
+	}
+	return commentString;
+}
 
 function toggleNav() {
     if (!shareableLists.sideNavShown) {

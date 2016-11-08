@@ -12,6 +12,9 @@ textarea {
 	overflow: scroll;
 	margin-left: 15px;
 	width: 78%;
+	border: 2px solid #cccccc;
+	padding: 5px;
+	resize: vertical;
 }
 
 #login-a {

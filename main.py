@@ -146,14 +146,16 @@ class ToggleCompleteAction(webapp2.RequestHandler):
 class InsertCommentAction(webapp2.RequestHandler):
     def post(self):
         new_comment = self.request.get("comment")
+        user = users.get_current_user()
+        new_comment = user.email().lower() + ": " + new_comment
         task_key = ndb.Key(urlsafe=self.request.get("task-key"))
         task = task_key.get()
 
         current_comments = task.comments
 
-        if current_comments:
-            updated_comments = current_comments.append(new_comment)
-            task.comments = updated_comments
+        if current_comments is not None:
+            current_comments.append(new_comment)
+            task.comments = current_comments
         else:
             task.comments = [new_comment]
         task.put()
