@@ -111,12 +111,6 @@ shareableLists.enableButtons = function() {
         is_complete = $(this).find(".is_complete").html();
         taskKey = $(this).find(".entity-key").html();
         
-        console.log(name);
-        console.log(due_date_time);
-        console.log(note);
-        console.log(is_complete);
-        console.log(taskKey);
-        
         $("#task-detail-modal input[name=name]").val(name).prop("disabled", true);
         var taskDueDate = new Date(due_date_time);
         $("#task-detail-modal input[name=due_date_time]").val(taskDueDate.toISOString().substring(0, 16)).prop("disabled", true);
