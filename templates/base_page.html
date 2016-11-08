@@ -49,9 +49,11 @@
 	</nav>
 
 	<div id="sidenav" class="sidenav">
+		<a href="/lists" class="private-list-link">All Tasks</a>
+		<br><br>
+
 		<a>Private Lists</a>
 		<hr>
-		<a href="/lists" class="private-list-link">All Tasks</a>
 		{% for list in private_list_query %}
 			<a href="{{ list.url }}" class="private-list-link">{{ list.name }}</a>
 		{% endfor %}
@@ -59,10 +61,7 @@
 
 		<a>Shared Lists</a>
 		<hr>
-		{% for list in owner_shared_list_query %}
-			<a href="{{ list.url }}" class="shared-list-link">{{ list.name }}</a>
-		{% endfor %}
-		{% for list in sharee_shared_list_query %}
+		{% for list in shared_list_query %}
 			<a href="{{ list.url }}" class="shared-list-link">{{ list.name }}</a>
 		{% endfor %}
 	</div>

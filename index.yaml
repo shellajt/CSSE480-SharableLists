@@ -12,6 +12,12 @@ indexes:
 
 - kind: List
   properties:
+  - name: access_keys
+  - name: shared
+  - name: name
+
+- kind: List
+  properties:
   - name: shared_keys
   - name: name
 
@@ -24,6 +30,11 @@ indexes:
   ancestor: yes
   properties:
   - name: shared_keys
+
+- kind: Task
+  properties:
+  - name: access_keys
+  - name: due_date_time
 
 - kind: Task
   ancestor: yes

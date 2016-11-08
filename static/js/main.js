@@ -71,8 +71,10 @@ shareableLists.enableButtons = function() {
 
 		name = $("#current-list-name").html();
 		entityKey = $("#current-list-key").html();
+        emailString = $("#current-list-emails").html();
 
         $("#insert-list-modal input[name=name]").val(name);
+        $("#insert-list-modal input[name=shared]").val(emailString);
         $("#insert-list-modal input[name=entity_key]").val(entityKey).prop("disabled", false);
     });
 
@@ -102,17 +104,17 @@ shareableLists.enableButtons = function() {
             console.log("POST Request Failed: " + textStatus + ", " + error);
         });
     });
-    
+
     $("tr").click(function() {
     	$('#task-detail-modal').modal('show');
-    	
+
     	name = $(this).find(".name").html();
         due_date_time = $(this).find(".due_date_time").html();
         note = $(this).find(".note").html();
         is_complete = $(this).find(".is_complete").html();
         comments = $(this).find(".comments").html();
         taskKey = $(this).find(".entity-key").html();
-        
+
         $("#task-detail-modal input[name=name]").val(name).prop("disabled", true);
         var taskDueDate = new Date(due_date_time);
         $("#task-detail-modal input[name=due_date_time]").val(taskDueDate.toISOString().substring(0, 16)).prop("disabled", true);
@@ -124,7 +126,7 @@ shareableLists.enableButtons = function() {
         }
         $("#task-detail-modal input[name=task-key]").val(taskKey);
         $("#task-detail-modal #comments-box").val(comments).prop("disabled", true);
-    
+
     });
 };
 

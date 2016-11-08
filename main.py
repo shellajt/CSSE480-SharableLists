@@ -39,14 +39,14 @@ class LoginPage(webapp2.RequestHandler):
 class ListsPage(BasePage):
     def update_values(self, email, values):
         values['private_list_query'] = utils.get_query_for_all_private_lists_for_email(email)
-        values['owner_shared_list_query'] = utils.get_query_for_all_shared_lists_for_owner_email(email)
-        values['sharee_shared_list_query'] = utils.get_query_for_all_shared_lists_for_sharee_email(email)
+        values['shared_list_query'] = utils.get_query_for_all_shared_lists_for_email(email)
 
         if values['listKey']:
             values['tasks_query'] = utils.get_query_for_all_task_for_list_key(values['listKey'])
             list_key = ndb.Key(urlsafe=values['listKey'])
             list_obj = list_key.get();
             values['list_name'] = list_obj.name;
+            values['list_emails'] = utils.get_access_key_email_string_for_list(list_obj)
         else:
             values['tasks_query'] = utils.get_query_for_all_tasks_for_email(email)
             values['list_name'] = "All Tasks";
@@ -64,8 +64,10 @@ class InsertTaskAction(BaseAction):
             if self.request.get("listKey"):
                 key = ndb.Key(urlsafe=self.request.get("listKey"))
                 task = Task(parent=key)
+                task.access_keys = key.get().access_keys
             else:
                 task = Task(parent=utils.get_parent_key_for_email(email))
+                task.access_keys = [utils.get_parent_key_for_email(email)]
 
         task.name = self.request.get("name")
         task.due_date_time = datetime.datetime.strptime( self.request.get("due_date_time"), "%Y-%m-%dT%H:%M" )
@@ -93,20 +95,25 @@ class InsertListAction(BaseAction):
             list = list_key.get()
         else:
             list = List(parent=utils.get_parent_key_for_email(email))
+            list.owner = utils.get_parent_key_for_email(email)
 
         list.name = self.request.get("name")
         list_key = list.put()
         list.url = "/lists?listKey=" + list_key.urlsafe()
-        # TODO: Add fields for shared lists
+
         shared_emails = self.request.get("shared").split(", ")
-        shared_keys = []
-        print(shared_emails)
+        access_keys = []
         for current_email in shared_emails:
             if not (current_email == ""):
-                shared_keys.append(utils.get_parent_key_for_email(current_email))
-            elif (current_email == "") and (len(shared_emails) == 1):
-                shared_keys.append(utils.get_parent_key_for_email("invalid"))
-        list.shared_keys = shared_keys
+                access_keys.append(utils.get_parent_key_for_email(current_email))
+        access_keys.append(list.owner)
+        list.access_keys = access_keys
+        utils.update_access_keys_for_all_tasks_in_list(list.key.urlsafe(), access_keys)
+
+        if len(access_keys) > 1:
+            list.shared = True
+        else:
+            list.shared = False
 
         list.put()
         self.redirect(list.url)
@@ -135,7 +142,7 @@ class ToggleCompleteAction(webapp2.RequestHandler):
         self.response.headers["Content-Type"] = "application/json"
         response = {"index": index, "is_complete": task.is_complete}
         self.response.out.write(json.dumps(response))
-        
+
 class InsertCommentAction(webapp2.RequestHandler):
     def post(self):
         new_comment = self.request.get("comment")
@@ -143,7 +150,7 @@ class InsertCommentAction(webapp2.RequestHandler):
         task = task_key.get()
 
         current_comments = task.comments
-        
+
         if current_comments:
             updated_comments = current_comments.append(new_comment)
             task.comments = updated_comments

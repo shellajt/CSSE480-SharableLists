@@ -12,28 +12,37 @@ def get_parent_key_for_email(email):
 
 def get_query_for_all_tasks_for_email(email):
     """ Returns a query for all Task objects for this user. """
-    parent_key = get_parent_key_for_email(email)
-    return Task.query(ancestor=parent_key).order(Task.due_date_time)
+    email_key = get_parent_key_for_email(email)
+    return Task.query(Task.access_keys == email_key).order(Task.due_date_time)
 
 def get_query_for_all_private_lists_for_email(email):
     """ Returns a query for all List objects for this user. """
-    parent_key = get_parent_key_for_email(email)
-    invalid_key = get_parent_key_for_email("invalid")
-    return List.query(ancestor=parent_key).filter(List.shared_keys == invalid_key)
+    email_key = get_parent_key_for_email(email)
+    return List.query(ndb.AND(List.access_keys == email_key, List.shared == False)).order(List.name)
 
-def get_query_for_all_shared_lists_for_sharee_email(email):
+def get_query_for_all_shared_lists_for_email(email):
     """ Returns a query for all List objects for this user. """
-    shared_key = get_parent_key_for_email(email)
-    return List.query(List.shared_keys == shared_key).order(List.name)
-
-def get_query_for_all_shared_lists_for_owner_email(email):
-    """ Returns a query for all List objects for this user. """
-    parent_key = get_parent_key_for_email(email)
-    invalid_key = get_parent_key_for_email("invalid")
-    query = List.query(ancestor=parent_key)
-    return query.filter(List.shared_keys != invalid_key)
+    email_key = get_parent_key_for_email(email)
+    return List.query(ndb.AND(List.access_keys == email_key, List.shared == True)).order(List.name)
 
 def get_query_for_all_task_for_list_key(list_key_urlsafe):
     """ Returns a query for all Task objects for this List. """
     list_key = ndb.Key(urlsafe=list_key_urlsafe)
     return Task.query(ancestor=list_key).order(Task.due_date_time)
+
+def update_access_keys_for_all_tasks_in_list(list_key_urlsafe, access_keys):
+    """ Updates access keys for all tasks belonging to this list. """
+    for task in get_query_for_all_task_for_list_key(list_key_urlsafe):
+        task.access_keys = access_keys
+        task.put()
+
+def get_access_key_email_string_for_list(listObj):
+    emailString = ""
+    ownerEmail = listObj.owner.id()
+    for i in range (0, len(listObj.access_keys)):
+        currentEmail = listObj.access_keys[i].id()
+        if not (currentEmail == ownerEmail):
+            if not (i == 0):
+                emailString += ", "
+            emailString += currentEmail
+    return emailString
