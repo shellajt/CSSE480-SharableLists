@@ -49,8 +49,8 @@ class ListsPage(BasePage):
         else:
             values['tasks_query'] = utils.get_query_for_all_tasks_for_email(email)
             values['list_name'] = "All Tasks";
-        
-        
+
+
     def get_template(self):
         return "templates/lists.html"
 
@@ -72,8 +72,10 @@ class InsertTaskAction(BaseAction):
         is_complete = self.request.get("is_complete")
         if is_complete:
             task.is_complete = True
-        else:
+        elif not is_complete:
             task.is_complete = False
+        else:
+            raise Exception("Cannot read is_complete value!")
         task.put()
         self.redirect(self.request.referer)
 

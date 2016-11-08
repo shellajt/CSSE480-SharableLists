@@ -19,7 +19,7 @@ shareableLists.enableButtons = function() {
 
         // TODO: Deal w/ timezones
         var currentDate = new Date();
-        console.log(currentDate.toISOString().substring(0, 16));
+        // console.log(currentDate.toISOString().substring(0, 16));
         $("#insert-task-modal input[name=due_date_time]").val(currentDate.toISOString().substring(0, 16));
         $("#insert-task-modal input[name=note]").val("");
         $("#insert-task-modal input[name=is_complete]").val(false);
@@ -41,7 +41,9 @@ shareableLists.enableButtons = function() {
         $("#insert-task-modal input[name=due_date_time]").val(taskDueDate.toISOString().substring(0, 16));
         $("#insert-task-modal input[name=note]").val(note);
         if (is_complete === "True") {
-            $("#insert-task-modal input[name=is_complete]").attr('checked', 'checked');
+            $("#insert-task-modal input[name=is_complete]").prop('checked', true);
+        } else {
+            $("#insert-task-modal input[name=is_complete]").prop('checked', false);
         }
         $("#insert-task-modal input[name=entity_key]").val(entityKey).prop("disabled", false);
     });
@@ -57,19 +59,17 @@ shareableLists.enableButtons = function() {
         $("#insert-list-modal .modal-title").html("Add a list");
         $("#insert-list-modal button[type=submit]").html("Add list");
 
-		$("#insert-list-modal input[name=name]").val("");
-		$("#name-input").focus();
-		$("#insert-list-modal input[name=entity_key]").val("").prop("disabled", true);
-	});
+        $("#insert-list-modal input[name=name]").val("");
+        $("#name-input").focus();
+        $("#insert-list-modal input[name=entity_key]").val("").prop("disabled", true);
+    });
 
-	$("#edit-list").click(function() {
-		$("#insert-list-modal .modal-title").html("Edit this list");
-		$("#insert-list-modal button[type=submit]").html("Edit list");
+    $("#edit-list").click(function() {
+        $("#insert-list-modal .modal-title").html("Edit this list");
+        $("#insert-list-modal button[type=submit]").html("Edit list");
 
 		name = $("#current-list-name").html();
-		console.log(name);
 		entityKey = $("#current-list-key").html();
-		console.log(entityKey);
 
         $("#insert-list-modal input[name=name]").val(name);
         $("#insert-list-modal input[name=entity_key]").val(entityKey).prop("disabled", false);
@@ -83,7 +83,6 @@ shareableLists.enableButtons = function() {
 
     $(".task-completed-checkbox").click(function() {
         var index = $(".task-completed-checkbox").index(this);
-        console.log(index);
         var dataToSend = {
             "index": index,
             "entityKey": $(".checkbox-entity-key").eq(index).text()
@@ -93,9 +92,11 @@ shareableLists.enableButtons = function() {
             console.log("Successful toggle complete post: " + JSON.stringify(data));
             if (data.is_complete) {
                 $(".task-completed-checkbox").eq(data.index).prop("checked", true);
-            } else if (data.is_complete) {
-				$(".task-completed-checkbox").eq(data.index).prop("checked", false);
-			}
+				$(".edit-task .is_complete").eq(data.index).html("True")
+            } else if (!data.is_complete) {
+                $(".task-completed-checkbox").eq(data.index).prop("checked", false);
+				$(".edit-task .is_complete").eq(data.index).html("False");
+            }
         }).fail(function(jqxhr, textStatus, error) {
             console.log("POST Request Failed: " + textStatus + ", " + error);
         });
