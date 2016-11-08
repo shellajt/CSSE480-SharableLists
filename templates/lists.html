@@ -29,7 +29,8 @@
 				{% for task in tasks_query %}
 				<tr>
 					<td>
-						<input type="checkbox" name="completed-checkbox" value="completed" onClick="return false" {% if task.is_complete %} checked {% endif %}>
+						<input type="checkbox" class= "task-completed-checkbox"name="completed-checkbox" value="completed" {% if task.is_complete %} checked {% endif %}>
+						<div class="hidden entity-key checkbox-entity-key">{{ task.key.urlsafe() }}</div>
 					</td>
 					<td>{{ task.name }}</td>
 					<td>{{ task.due_date_time }}</td>

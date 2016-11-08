@@ -1,4 +1,5 @@
 import datetime
+import json
 import os
 
 from google.appengine.api import users
@@ -99,11 +100,25 @@ class DeleteListAction(BaseAction):
         task_key.delete()
         self.redirect(self.request.referer)
 
+class ToggleCompleteAction(webapp2.RequestHandler):
+    def post(self):
+        index = self.request.get("index")
+        task_key = ndb.Key(urlsafe=self.request.get("entityKey"))
+        task = task_key.get()
+
+        task.is_complete = not task.is_complete
+        task.put()
+
+        self.response.headers["Content-Type"] = "application/json"
+        response = {"index": index, "is_complete": task.is_complete}
+        self.response.out.write(json.dumps(response))
+
 app = webapp2.WSGIApplication([
     ('/', LoginPage),
     ('/lists', ListsPage),
     ('/inserttask', InsertTaskAction),
     ('/deletetask', DeleteTaskAction),
     ('/insertlist', InsertListAction),
-    ('/deletelist', DeleteListAction)
+    ('/deletelist', DeleteListAction),
+    ('/togglecomplete', ToggleCompleteAction)
 ], debug=True)
