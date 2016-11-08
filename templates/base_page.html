@@ -51,6 +51,7 @@
 	<div id="sidenav" class="sidenav">
 		<a>Private Lists</a>
 		<hr> 
+		<a href="/lists" class="private_list-link">Default</a>
 		{% for list in private_list_query %}
 			<a href="{{ list.url }}" class="private_list-link">{{ list.name }}</a>
 		{% endfor %}
