@@ -33,9 +33,33 @@
 						<input type="checkbox" class= "task-completed-checkbox"name="completed-checkbox" value="completed" {% if task.is_complete %} checked {% endif %}>
 						<div class="hidden entity-key checkbox-entity-key">{{ task.key.urlsafe() }}</div>
 					</td>
-					<td class="clickable">{{ task.name }}</td>
-					<td class="clickable">{{ task.due_date_time }}</td>
-					<td class="clickable">{{ task.note }}</td>
+					<td class="clickable">
+						{{ task.name }}
+						<div class="hidden entity-key">{{ task.key.urlsafe() }}</div>
+						<div class="hidden is_complete">{{ task.is_complete }}</div>
+						<div class="hidden name">{{ task.name }}</div>
+						<div class="hidden due_date_time">{{ task.due_date_time }}</div>
+						<div class="hidden note">{{ task.note }}</div>
+						<div class="hidden comments">{{ task.comments }}</div>
+					</td>
+					<td class="clickable">
+						{{ task.due_date_time }}
+						<div class="hidden entity-key">{{ task.key.urlsafe() }}</div>
+						<div class="hidden is_complete">{{ task.is_complete }}</div>
+						<div class="hidden name">{{ task.name }}</div>
+						<div class="hidden due_date_time">{{ task.due_date_time }}</div>
+						<div class="hidden note">{{ task.note }}</div>
+						<div class="hidden comments">{{ task.comments }}</div>
+					</td>
+					<td class="clickable">
+						{{ task.note }}
+						<div class="hidden entity-key">{{ task.key.urlsafe() }}</div>
+						<div class="hidden is_complete">{{ task.is_complete }}</div>
+						<div class="hidden name">{{ task.name }}</div>
+						<div class="hidden due_date_time">{{ task.due_date_time }}</div>
+						<div class="hidden note">{{ task.note }}</div>
+						<div class="hidden comments">{{ task.comments }}</div>
+					</td>
 					<td>
 						<!-- Indicates a successful or positive action -->
 						<button type="button" class="btn btn-success btn-xs edit-task" data-toggle="modal" data-target="#insert-task-modal">
