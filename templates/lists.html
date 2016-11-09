@@ -2,18 +2,13 @@
 <ul class="nav navbar-nav">
 	<li><a id="add-task" href="#" data-toggle="modal" data-target="#insert-task-modal">Add Task</a></li>
 	<li><a id="add-list" href="#" data-toggle="modal" data-target="#insert-list-modal">Add List</a></li>
+	{% if listKey %}
+	       	<li> <a id="edit-list" href="#" data-toggle="modal" data-target="#insert-list-modal">Edit List</a></li>
+	   		<li> <a id="delete-list" href="#" data-toggle="modal" data-target="#delete-list-modal">Delete List</a></li></li>
+    {% endif %}
 </ul>
 <ul class="nav navbar-nav navbar-right">
-	<li class="dropdown">
-    	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <span class="glyphicon glyphicon-option-vertical"></span></a>
-        <ul class="dropdown-menu">
-        	{% if listKey %}
-	        	<li> <a id="edit-list" href="#" data-toggle="modal" data-target="#insert-list-modal">Edit List</a></li>
-	    		<li> <a id="delete-list" href="#" data-toggle="modal" data-target="#delete-list-modal">Delete List</a></li></li>
-    		{% endif %}
-   			<li><a href="{{ logout_url }}">Logout</a></li>
-        </ul>
-	</li>
+   	<li><a href="{{ logout_url }}">Logout</a></li>
 </ul>
 <div id="current-list-key" class="hidden">{{ listKey }}</div>
 <div id="current-list-name" class="hidden">{{ list_name }}</div>
