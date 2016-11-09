@@ -34,8 +34,12 @@ td.edit-actions {
 	text-align: center;
 }
 
+#sidebar-toggle {
+	color: #9d9d9d;
+}
+
 #sidebar-toggle:hover {
-	color: #337ab7;
+	color: #FFF;
 }
 
 .sidenav {
@@ -45,7 +49,7 @@ td.edit-actions {
     z-index: 1; /* Stay on top */
     top: 0;
     left: 0;
-    background-color: #333; /* Same black-ish gray as navbar*/
+    background-color: #222; /* Same black-ish gray as navbar*/
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 60px; /* Place content 60px from the top */
     transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
@@ -56,7 +60,7 @@ td.edit-actions {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 1.5em;
-    color: #818181;
+    color: #9d9d9d;
     display: block;
     transition: 0.3s
 }
