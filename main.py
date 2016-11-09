@@ -9,6 +9,7 @@ import webapp2
 
 from handlers.base_handlers import BasePage, BaseAction
 from models import Task, List
+from utils import MASTER_KEY
 import utils
 
 
@@ -94,7 +95,7 @@ class InsertListAction(BaseAction):
             list_key = ndb.Key(urlsafe=self.request.get("entity_key"))
             list = list_key.get()
         else:
-            list = List(parent=utils.get_parent_key_for_email(email))
+            list = List(parent=MASTER_KEY)
             list.owner = utils.get_parent_key_for_email(email)
 
         list.name = self.request.get("name")
