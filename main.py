@@ -71,7 +71,7 @@ class InsertTaskAction(BaseAction):
                 task = Task(parent=key)
                 task.access_keys = key.get().access_keys
             else:
-                task = Task(parent=utils.get_parent_key_for_email(email))
+                task = Task(parent=MASTER_KEY)
                 task.access_keys = [utils.get_parent_key_for_email(email)]
 
         task.name = self.request.get("name")

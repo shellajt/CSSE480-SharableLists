@@ -108,12 +108,12 @@ shareableLists.enableButtons = function() {
     $(".clickable").click(function() {
     	$('#task-detail-modal').modal('show');
 
-    	name = $(".name").html();
-        due_date_time = $(".due_date_time").html();
-        note = $(".note").html();
-        is_complete = $(".is_complete").html();
-        comments = $(".comments").html();
-        taskKey = $(".entity-key").html();
+    	name = $(this).find(".name").html();
+        due_date_time = $(this).find(".due_date_time").html();
+        note = $(this).find(".note").html();
+        is_complete = $(this).find(".is_complete").html();
+        comments = $(this).find(".comments").html();
+        taskKey = $(this).find(".entity-key").html();
         if (comments != null) {
         	stringComments = shareableLists.parseComments(comments);
         } else {
