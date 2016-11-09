@@ -119,14 +119,6 @@ shareableLists.enableButtons = function() {
         } else {
         	stringComments = "";
         }
-        
-        console.log(name);
-        console.log(due_date_time);
-        console.log(note);
-        console.log(is_complete);
-        console.log(comments);
-        console.log(taskKey);
-        console.log(stringComments);
 
         $("#task-detail-modal input[name=name]").val(name).prop("readonly", true);
         var taskDueDate = new Date(due_date_time);
