@@ -17,10 +17,14 @@ shareableLists.enableButtons = function() {
 
         $("#insert-task-modal input[name=name]").val("");
 
-        // TODO: Deal w/ timezones
+        // DONE: Deal w/ timezones
         var currentDate = new Date();
-        // console.log(currentDate.toISOString().substring(0, 16));
-        $("#insert-task-modal input[name=due_date_time]").val(currentDate.toISOString().substring(0, 16));
+        var ms = currentDate.getTime();
+        var offsetMins = currentDate.getTimezoneOffset();
+        var adjustedDate = new Date(ms - (offsetMins * 60000));
+        // console.log(adjustedTime);
+        // console.log(adjustedTime.toISOString().substring(0, 16));
+        $("#insert-task-modal input[name=due_date_time]").val(adjustedDate.toISOString().substring(0, 16));
         $("#insert-task-modal input[name=note]").val("");
         $("#insert-task-modal input[name=is_complete]").val(false);
         $("#insert-task-modal input[name=entity_key]").val("").prop("disabled", true);
@@ -38,7 +42,10 @@ shareableLists.enableButtons = function() {
 
         $("#insert-task-modal input[name=name]").val(name);
         var taskDueDate = new Date(due_date_time);
-        $("#insert-task-modal input[name=due_date_time]").val(taskDueDate.toISOString().substring(0, 16));
+        var ms = taskDueDate.getTime();
+        var offsetMins = taskDueDate.getTimezoneOffset();
+        var adjustedDate = new Date(ms - (offsetMins * 60000));
+        $("#insert-task-modal input[name=due_date_time]").val(adjustedDate.toISOString().substring(0, 16));
         $("#insert-task-modal input[name=note]").val(note);
         if (is_complete === "True") {
             $("#insert-task-modal input[name=is_complete]").prop('checked', true);
@@ -122,7 +129,10 @@ shareableLists.enableButtons = function() {
 
         $("#task-detail-modal input[name=name]").val(name).prop("readonly", true);
         var taskDueDate = new Date(due_date_time);
-        $("#task-detail-modal input[name=due_date_time]").val(taskDueDate.toISOString().substring(0, 16)).prop("readonly", true);
+        var ms = taskDueDate.getTime();
+        var offsetMins = taskDueDate.getTimezoneOffset();
+        var adjustedDate = new Date(ms - (offsetMins * 60000));
+        $("#task-detail-modal input[name=due_date_time]").val(adjustedDate.toISOString().substring(0, 16)).prop("readonly", true);
         $("#task-detail-modal input[name=note]").val(note).prop("readonly", true);
         if (is_complete === "True") {
             $("#task-detail-modal input[name=is_complete]").prop('checked', true).prop("disabled", true);
