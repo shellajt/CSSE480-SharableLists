@@ -9,6 +9,7 @@ import webapp2
 
 from handlers.base_handlers import BasePage, BaseAction
 from models import Task, List
+from utils import MASTER_KEY
 import utils
 
 
@@ -47,6 +48,10 @@ class ListsPage(BasePage):
             list_obj = list_key.get();
             values['list_name'] = list_obj.name;
             values['list_emails'] = utils.get_access_key_email_string_for_list(list_obj)
+            if (list_obj.owner.id().lower() == email.lower()):
+                values['ownership'] = True
+            else:
+                values['ownership'] = False
         else:
             values['tasks_query'] = utils.get_query_for_all_tasks_for_email(email)
             values['list_name'] = "All Tasks";
@@ -94,7 +99,7 @@ class InsertListAction(BaseAction):
             list_key = ndb.Key(urlsafe=self.request.get("entity_key"))
             list = list_key.get()
         else:
-            list = List(parent=utils.get_parent_key_for_email(email))
+            list = List(parent=MASTER_KEY)
             list.owner = utils.get_parent_key_for_email(email)
 
         list.name = self.request.get("name")

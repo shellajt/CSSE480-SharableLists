@@ -4,6 +4,7 @@ from google.appengine.ext import ndb
 
 from models import Task, List
 
+MASTER_KEY = ndb.Key("Entity", "MASTER_KEY")
 
 # TODO: Implement
 def get_parent_key_for_email(email):
@@ -13,17 +14,20 @@ def get_parent_key_for_email(email):
 def get_query_for_all_tasks_for_email(email):
     """ Returns a query for all Task objects for this user. """
     email_key = get_parent_key_for_email(email)
-    return Task.query(Task.access_keys == email_key).order(Task.due_date_time)
+    master_query = Task.query(ancestor=MASTER_KEY)
+    return master_query.filter(Task.access_keys == email_key).order(Task.due_date_time)
 
 def get_query_for_all_private_lists_for_email(email):
     """ Returns a query for all List objects for this user. """
     email_key = get_parent_key_for_email(email)
-    return List.query(ndb.AND(List.access_keys == email_key, List.shared == False)).order(List.name)
+    master_query = List.query(ancestor=MASTER_KEY)
+    return master_query.filter(ndb.AND(List.access_keys == email_key, List.shared == False)).order(List.name)
 
 def get_query_for_all_shared_lists_for_email(email):
     """ Returns a query for all List objects for this user. """
     email_key = get_parent_key_for_email(email)
-    return List.query(ndb.AND(List.access_keys == email_key, List.shared == True)).order(List.name)
+    master_query = List.query(ancestor=MASTER_KEY)
+    return master_query.filter(ndb.AND(List.access_keys == email_key, List.shared == True)).order(List.name)
 
 def get_query_for_all_task_for_list_key(list_key_urlsafe):
     """ Returns a query for all Task objects for this List. """
