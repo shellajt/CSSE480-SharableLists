@@ -4,7 +4,9 @@
 	<li><a id="add-list" href="#" data-toggle="modal" data-target="#insert-list-modal">Add List</a></li>
 	{% if listKey %}
 	       	<li> <a id="edit-list" href="#" data-toggle="modal" data-target="#insert-list-modal">Edit List</a></li>
-	   		<li> <a id="delete-list" href="#" data-toggle="modal" data-target="#delete-list-modal">Delete List</a></li></li>
+			{% if ownership %}
+	   			<li> <a id="delete-list" href="#" data-toggle="modal" data-target="#delete-list-modal">Delete List</a></li></li>
+			{% endif %}
     {% endif %}
 </ul>
 <ul class="nav navbar-nav navbar-right">
